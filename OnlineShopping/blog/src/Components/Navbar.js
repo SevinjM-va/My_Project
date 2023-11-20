@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import SeeFoo from '../images/Seefoo.png';
 
 export const Navbar = () => {
   return (
     <div>
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
-          <img src='https://www.canva.com/design/DAF0r5-Dcz4/SEq4bNgh05R9zX4w3Dvq-w/view?utm_content=DAF0r5-Dcz4&utm_campaign=designshare&utm_medium=link&utm_source=editor' alt=""></img>
+          <img className="logoImg" src={SeeFoo} alt=""></img>
           <a className="navbar-brand">ShopShip</a>
           <form className="d-flex">
 
