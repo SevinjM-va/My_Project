@@ -1,103 +1,90 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
-
-
-
+import axios, { Axios } from "axios";
 
 export const Signup = () => {
-  const [buttonPress, setButtonPress] = useState(false);
-  const [data, setData] = useState("");
-  const firstNameInput = useRef('');
-  const lastNameInput = useRef('');
-  const userNameInput = useRef('')
-  const emailInput = useRef('')
-  const passwordInput = useRef('')
+  const [error, setError] = useState('');
+  const firstname = useRef()
+  const lastname = useRef()
+  const username = useRef()
+  const email = useRef()
+  const password = useRef()
   
 
-  const fetching = () => {
-    axios.get('http://localhost:3500/signup').then(res=>console.log(res));
-    // const data = await result.json();
-    //  console.log('dataaaa',result);
-    // return data;
-  };
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    const firstnameIn = firstname.current.value;
+    const lastnameIn = lastname.current.value;
+    const usernameIn = username.current.value;
+    const emailIn = email.current.value;
+    const passwordIn = password.current.value;
 
-  useEffect(()=>{
-    if (buttonPress) {
-      fetching();
-      setButtonPress(false);
-    }
-  }, [buttonPress]);
-
-
-  
-
-  const handleSubmit=(e)=>{
-    // e.preventDefault();
-   const firstname = firstNameInput.current.value;
-   const lastname = lastNameInput.current.value;
-   const username = userNameInput.current.value;
-   const email = emailInput.current.value;
-   const password = passwordInput.current.value;
-   setButtonPress(true);
-   
-  //  {method: 'POST', headers: {
-  //   'Content-Type': 'application/json',
-  //  },
-  //  body: JSON.stringify({ firstname }),
-  // })
-  // const body = await response.text();
-  // console.log('body', body);
-}
+    try {
+    const { data } = await axios.post('http://localhost:3500/signup',{
+      firstname: firstnameIn,
+      lastname: lastnameIn,
+      username: usernameIn,
+      email: emailIn,
+      password: passwordIn
+    })
+  } catch (error){setError(error)}
+  }
 
 
 
   return (
     <div className="signupContainer">
-  
+      {error? 
+      <div className="errorContainer">
+        <h2 className="errorTitle">Error</h2>
+        <p className="errorMessage">This user is already exists!!!</p>
+        </div> : 
       <div className="miniSignupContainer">
-        <form>
+        <form onSubmit={(e)=>handleSubmit(e)}>
         <h3 className="signUpheader">Sign Up</h3>
           <div className="form-group">
             <input
               type="text"
               className="form-control"
-              id="exampleInputFirstName"
+              id="firstname"
+              ref={firstname}
               aria-describedby="emailHelp"
               placeholder="Enter Your First Name"
-              ref={firstNameInput}
             />
             <input
               type="text"
               className="form-control"
-              id="exampleInputLastName"
+
+              id="lastname"
+              ref={lastname}
               aria-describedby="emailHelp"
               placeholder="Enter Your Last Name"
-              ref={lastNameInput}
             />
             <input
               type="text"
               className="form-control"
-              id="exampleInputUserName"
+
+              id="username"
+              ref={username}
               aria-describedby="emailHelp"
               placeholder="Enter Your User Name"
-              ref={userNameInput}
             />
             <input
               type="email"
               className="form-control"
-              id="exampleInputEmail1"
+      
+              id="email"
+              ref={email}
               aria-describedby="emailHelp"
               placeholder="Enter email"
-              ref={emailInput}
             />
           </div>
           <div className="form-group">
             <input
               type="password"
               className="form-control"
-              id="exampleInputPassword1"
+              ref={password}
+              id="password"
               placeholder="Password"
-              ref={passwordInput}
             />
           </div>
           <div className="form-group form-check">
@@ -105,17 +92,18 @@ export const Signup = () => {
               type="checkbox"
               className="form-check-input"
               id="exampleCheck1"
-              required
+              // required
             />
             <label className="form-check-label" htmlFor="exampleCheck1">
               I am agree with all conditions
             </label>
           </div>
-          <button onClick={handleSubmit} type="button" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Submit
           </button>
         </form>
       </div>
+      }
     </div>
   );
 };
