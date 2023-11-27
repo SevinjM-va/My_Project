@@ -1,36 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import SeeFoo from "../images/Seefoo.png";
+import { connect } from 'react-redux';
 
-export const Home = () => {
+export const Home = (props) => {
+
+  // console.log("props from home", props);
   return (
     <div>
-      <nav className="navbar navbar-light bg-light">
-        <div className="container-fluid">
-          <Link to="/" className="navbar-brand">
-            <img className="logoImg" src={SeeFoo} alt=""></img>
-          </Link>
-    
-          <form className="d-flex">
-          <Link to="/login">
-            <button className="btn btn-success" type="submit">
-              Login
-            </button>
-            </Link>
-            <Link to="/signup">
-              <button className="btn btn-success" type="submit">
-                Sign up
-              </button>
-            </Link>
-          </form>
-        </div>
-      </nav>
 
       <div className="heading">
-      <ul>
-            <Link to='/explore'><li>Explore</li></Link>
-            <Link to='/restaurants'><li>Restaurants</li></Link>
-            <Link to='/stores'><li>Stores</li></Link>
+      <ul className="homeUl">
+            <Link to='/explore'><li className="homeLi">Explore</li></Link>
+            <Link to='/restaurants'><li className="homeLi">Restaurants</li></Link>
+            <Link to='/stores'><li className="homeLi">Stores</li></Link>
           </ul>
         <div className="title">
           <h1>Select Your Favourite Food</h1>
@@ -71,39 +53,6 @@ export const Home = () => {
           </div>
         </div>
       </div>
-
-      <footer>
-        <div className="footer1">
-          <div className="footer11">
-            <h3>SeeFoo</h3>
-            <p>Our mission to serve you and make fastest shipping!</p>
-          </div>
-
-          <div>
-            <h3>Social</h3>
-            <div className="icon-container-footer">
-              <img
-                className="icon-footer"
-                src="http://www.w3.org/2000/svg"
-                alt=""
-              ></img>
-              <img className="icon-footer" src="Img/twitter.svg" alt=""></img>
-              <img className="icon-footer" src="Img/youtube.svg" alt=""></img>
-              <img className="icon-footer" src="Img/github.svg" alt=""></img>
-            </div>
-          </div>
-        </div>
-
-        <hr />
-        <div className="footer2">
-          <div>
-            <i className="fa-regular fa-copyright" />
-          </div>
-          <div>
-            <p>SeeFoo 2023</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

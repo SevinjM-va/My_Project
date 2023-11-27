@@ -1,27 +1,63 @@
-import { Navbar } from './Components/Navbar';
-import './App.css';
-import {Home} from './Components/Home';
-import { Route, BrowserRouter as Router, Link, Routes } from 'react-router-dom';
-import { Signup } from './Components/SignUp';
-import { Login } from './Components/Login';
-import { Explore } from './Components/Explore';
-import {Restaurants} from './Components/Restaurants'
-import { Stores } from './Components/Stores';
+import React, { useEffect, useState } from "react";
+import { Navbar } from "./Components/Navbar";
+import "./App.css";
+import { Home } from "./Components/Home";
+import { Route, BrowserRouter as Router, Link, Routes,  } from "react-router-dom";
+import { Signup } from "./Components/SignUp";
+import { LoginPage } from "./Components/Login";
+import Explore from "./Components/Explore";
+import Restaurants from "./Components/Restaurants";
+import { Stores } from "./Components/Stores";
+import Details from "./Components/Details";
+import { Footer } from "./Components/Footer";
+import { connect } from "react-redux";
+import { Checkout } from "./Components/Checkout";
+import { ModalPage } from "./Components/ModalPage";
 
 
-function App() {
+function App(props) {
+  const [token, setToken] = useState('');
+
+
+
+  useEffect(() => {
+    const fetching = async () => {
+      try {
+        const response = await fetch("http://localhost:3500/restaurants");
+        if (!response.ok) {
+          throw new Error(`Http error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        props.dispatch({ type: "FETCHING_RESTAURANTS", payload: data });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetching();
+  }, []);
+
   return (
     <div>
-        <Routes>
-          <Route exact path='/' element={ <Home/>}/>
-          <Route path='/signup' element={ <Signup/>}/>
-          <Route path='/login' element={ <Login/>}/>
-          <Route path ='/explore' element={<Explore/>}/>
-          <Route path ='/restaurants/' element={<Restaurants/>}/>
-          <Route path ='/stores' element={<Stores/>}/>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/restaurants/" element={<Restaurants />} />
+        <Route path="/restaurants/:rest_id" Component={Details} />
+        <Route path="/stores" element={<Stores />} />
+        <Route path="/alert" element={<ModalPage />} />
+        <Route path="/checkout" Component={()=> <Checkout authorized={false}/>} />
+ 
       </Routes>
+      <Footer />
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  info: state,
+});
+
+export default connect(mapStateToProps)(App);

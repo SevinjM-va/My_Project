@@ -4,7 +4,7 @@ import axios, { Axios } from "axios";
 
 
 
-export const Login = () => {
+export const LoginPage = () => {
   const [error, setError] = useState('');
   const email = useRef()
   const password = useRef()

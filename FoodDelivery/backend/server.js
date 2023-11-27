@@ -6,6 +6,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const secretKey = "mysecretkey";
+const { authUser, authAdmin } = require ('./middleware');
 
 const db = require("knex")({
   client: "pg",
@@ -26,17 +27,47 @@ app.use(
 );
 app.use(cors());
 
-app.get("/", function (req, res) {
-  res.send("api isleyir");
+app.get("/checkout", authUser(['user', 'admin']), (req, res)=>{
+  res.json("api isleyir");
 });
 
 app.get("/restaurants", function (req, res) {
   db("restaurants")
-    .select("name")
-    .then((result) => {
-        res.send({ result });
-    });
+    .select('*')
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err)=>{
+      res.status(500).json({ error: 'An error occurred while retrieving data'})
+    })
 });
+app.get('/restaurants/:rest_id', async(req, res)=>{
+  const rest_id = req.params.rest_id;
+  try{
+  const categ = await db('category')
+    .select('*')
+    .where('restaurant_id',rest_id)
+    const categId= categ.map((item)=>{
+      return item.id
+    });
+
+    const menu = await db('menu_item')
+    .select('*')
+    .whereIn ('category_id',categId);
+
+    const responseData = {
+      categories: categ,
+      menuItems: menu
+    }
+    res.json(responseData);
+  }
+  catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+
 
 app.post("/signup", async (req, res) => {
   try {

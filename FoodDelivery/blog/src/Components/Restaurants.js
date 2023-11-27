@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
 
+export const Restaurants = (props) => {
 
-export const Restaurants = () => {
-  const [rest, setRest] = useState('')
-
-
-  useEffect(()=>{
-    const fetching= async()=>{
-        const response = await fetch("http://localhost:3500/restaurants")
-        console.log(response)
-    }
-      
-    fetching()
-  },[])
-
-  console.log(rest)
-
-  
   return (
     <div className="restContainer">
-      {/* {rest? rest.result.map((data)=>{
-        console.log(data.name)
-        return(
-          <div key={data.id}  className="restCardContainer">
-            <img src='../images/img6' alt=""></img>
-            <h3>{data.name}</h3>
-          </div> 
-        )
-        }): ('Loading...')} */}
-      
+      <div className="restHeader">
+        <h2 className="restTitle">Restaurants</h2>
+        <h3> All Restaurants</h3>
+      </div>
+      <div className="restMiniContainer">
+        {props.info
+          ? props.info.map((data) => {
+              // console.log(data.img);
+              return (
+                <Link to={`/restaurants/${data.id}?name=${data.name}`}>
+                  <div
+                    key={data.id}
+                    className="restCardContainer"
+>
+                    <img className="restImg" src={data.img} alt={data.alt} />
+                    <h4>{data.name}</h4>
+                  </div>
+                </Link>
+              );
+            })
+          : "Loading..."}
+      </div>
     </div>
-  )
-}
+  );
+};
+const mapStateToProps=(state)=>({
+  info: state
+})
+
+export default connect(mapStateToProps)(Restaurants)
