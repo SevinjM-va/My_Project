@@ -1,9 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios, { Axios } from "axios";
-import { useHistory } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 export const Signup = () => {
   const [error, setError] = useState('');
+  // let navigate = useNavigate();
+
+  // function handleClick() {
+  //   navigate('/');
+  // }
+
   const firstname = useRef()
   const lastname = useRef()
   const username = useRef()
@@ -105,6 +111,7 @@ export const Signup = () => {
         </form>
       </div>
       }
+      
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios, { Axios } from "axios";
+import { useNavigate } from "react-router";
 
 
 
@@ -8,6 +9,8 @@ export const LoginPage = () => {
   const [error, setError] = useState('');
   const email = useRef()
   const password = useRef()
+  const navigate = useNavigate();
+  const [data, setData] = useState(false);
   
 
   const handleSubmit=async(e)=>{
@@ -16,14 +19,19 @@ export const LoginPage = () => {
     const passwordIn = password.current.value;
 
     // try {
-    const { data } = await axios.post('http://localhost:3500/signup',{
+    const { data } = await axios.post('http://localhost:3500/login',{
       email: emailIn,
       password: passwordIn
     })
-  // } 
-  // catch (error){setError(error)}
+    localStorage.setItem('token', data.token)
+    setData(data.success)
   }
-
+  console.log('data',data);
+  const handleClick=()=>{
+    if(data){
+      navigate('/')
+    }
+  }
 
 
   return (
@@ -59,7 +67,7 @@ export const LoginPage = () => {
           <div className="form-group form-check">
           
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" onClick={handleClick} className="btn btn-primary">
             Submit
           </button>
         </form>

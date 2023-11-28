@@ -12,7 +12,6 @@ import Details from "./Components/Details";
 import { Footer } from "./Components/Footer";
 import { connect } from "react-redux";
 import { Checkout } from "./Components/Checkout";
-import { ModalPage } from "./Components/ModalPage";
 
 
 function App(props) {
@@ -45,11 +44,9 @@ function App(props) {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/restaurants/" element={<Restaurants />} />
-        <Route path="/restaurants/:rest_id" Component={Details} />
+        <Route path="/restaurants/:rest_id" element={<Details/>} />
         <Route path="/stores" element={<Stores />} />
-        <Route path="/alert" element={<ModalPage />} />
-        <Route path="/checkout" Component={()=> <Checkout authorized={false}/>} />
- 
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <Footer />
     </div>

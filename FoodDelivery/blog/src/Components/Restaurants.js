@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 
 export const Restaurants = (props) => {
-
   return (
     <div className="restContainer">
       <div className="restHeader">
@@ -13,7 +12,7 @@ export const Restaurants = (props) => {
       </div>
       <div className="restMiniContainer">
         {props.info
-          ? props.info.map((data) => {
+          ? props.info.initialSt.map((data) => {
               // console.log(data.img);
               return (
                 <Link to={`/restaurants/${data.id}?name=${data.name}`}>

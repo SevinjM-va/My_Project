@@ -446,15 +446,19 @@ input[type="number"]:focus {
   .checkoutDiv{
     width: 90%;
     height: 400px;
-    box-shadow: 0 0 10px 1.2px rgb(95, 92, 92);
+    box-shadow: 0 0 2px 0.1px rgb(95, 92, 92);
     display: flex;
+    justify-content: center;
   }
  .checkoutDetails{
-  border: 2px solid black;
   width: 70%;
  }
+ .ordersTitle{
+  padding: 20px;
+ }
  .checkoutOrder{
-  border: 2px solid black;
+  box-shadow: 0 0 10px 1.2px rgb(95, 92, 92);
+  padding: 20px;
   width: 30%;
  }
  .itemSubtotal,.deliveryFee,.totalSum{
@@ -469,17 +473,30 @@ input[type="number"]:focus {
   color: white;
   border: none;
  }
- .carousel-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
-  margin: 0 auto;
-}
 
-.carousel-content {
-  border: 1px solid #ccc;
-  padding: 20px;
-  flex: 1;
-  text-align: center;
-}
+ .orderCard{
+  width: 95%;
+  height: 150px;
+  padding: 10px;
+  box-shadow: 0 0 10px 1.2px rgb(95, 92, 92);
+  margin: 10px;
+  cursor: pointer;
+  display: flex;
+  font-weight: bold;
+ }
+ .orderDetail{
+  width: 80%;
+  padding: 20px 50px;
+
+ }
+ .orderSmallImg{
+  width: 150px;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+ }
+ .price{
+  color: #007bff;
+ }
+ .detail{
+  display: flex;
+  justify-content: space-between;
+ }

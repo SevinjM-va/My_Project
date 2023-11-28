@@ -6,7 +6,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const secretKey = "mysecretkey";
-const { authUser, authAdmin } = require ('./middleware');
+const authentificateJWT = require("./middleware");
 
 const db = require("knex")({
   client: "pg",
@@ -27,47 +27,47 @@ app.use(
 );
 app.use(cors());
 
-app.get("/checkout", authUser(['user', 'admin']), (req, res)=>{
+app.get("/checkout", authentificateJWT, (req, res) => {
+  console.log("user", req.user);
   res.json("api isleyir");
 });
 
 app.get("/restaurants", function (req, res) {
   db("restaurants")
-    .select('*')
+    .select("*")
     .then((data) => {
       res.json(data);
     })
-    .catch((err)=>{
-      res.status(500).json({ error: 'An error occurred while retrieving data'})
-    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ error: "An error occurred while retrieving data" });
+    });
 });
-app.get('/restaurants/:rest_id', async(req, res)=>{
+app.get("/restaurants/:rest_id", async (req, res) => {
   const rest_id = req.params.rest_id;
-  try{
-  const categ = await db('category')
-    .select('*')
-    .where('restaurant_id',rest_id)
-    const categId= categ.map((item)=>{
-      return item.id
+  try {
+    const categ = await db("category")
+      .select("*")
+      .where("restaurant_id", rest_id);
+    const categId = categ.map((item) => {
+      return item.id;
     });
 
-    const menu = await db('menu_item')
-    .select('*')
-    .whereIn ('category_id',categId);
+    const menu = await db("menu_item")
+      .select("*")
+      .whereIn("category_id", categId);
 
     const responseData = {
       categories: categ,
-      menuItems: menu
-    }
+      menuItems: menu,
+    };
     res.json(responseData);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-  catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-})
-
-
+});
 
 app.post("/signup", async (req, res) => {
   try {
@@ -106,7 +106,19 @@ app.post("/signup", async (req, res) => {
       })
       .then((insertedUser) => {
         const createdUser = insertedUser[0];
-
+        const token = jwt.sign(
+          {
+            firstname: createdUser.firstname,
+            lastname: createdUser.lastname,
+            username: createdUser.username,
+            email: createdUser.email,
+          },
+          secretKey,
+          {
+            expiresIn: "2h",
+          }
+        );
+        res.cookie("token", token, { httpOnly: true });
         res.status(200).json({
           message: "User successfully created",
           user: {
@@ -142,7 +154,13 @@ app.post("/login", async (req, res) => {
         .status(401)
         .json({ message: "Email or password is incorrect" });
     }
-    res.status(200).json({ message: "Login successful", user: user });
+    const token = jwt.sign({ email: user.email }, secretKey, {
+      expiresIn: "2h",
+    });
+
+    res
+      .status(200)
+      .json({ message: "Login successful", success: true, token: token });
   } catch (error) {
     console.error("Error during signup: ", error);
     res.status(500).json({ error: "Internal Server Error" });

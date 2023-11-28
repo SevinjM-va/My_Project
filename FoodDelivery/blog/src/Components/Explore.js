@@ -9,15 +9,7 @@ const Explore = (props) => {
   const [slides, setSlides] = useState("");
 
 
-  const nextSlide = () => {
-    setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-  };
 
-  const prevSlide = () => {
-    setCurrentSlide((prevSlide) =>
-      prevSlide === 0 ? slides.length - 1 : prevSlide - 1
-    );
-  };
 
 
   useEffect(() => {
@@ -40,12 +32,7 @@ const Explore = (props) => {
 
   return (
     <div>
-      <div className="carousel-container">
-      <button onClick={prevSlide}>&lt; Prev</button>
-
-      <div className="carousel-content">{slides[currentSlide]}</div>
-      <button onClick={nextSlide}>Next &gt;</button>
-    </div>
+      
     </div>
   );
 };
