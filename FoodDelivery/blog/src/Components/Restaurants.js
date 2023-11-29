@@ -12,7 +12,7 @@ export const Restaurants = (props) => {
       </div>
       <div className="restMiniContainer">
         {props.info
-          ? props.info.initialSt.map((data) => {
+          ? props.info.initialSt.restaurants.map((data) => {
               // console.log(data.img);
               return (
                 <Link to={`/restaurants/${data.id}?name=${data.name}`}>

@@ -3,37 +3,35 @@ import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { formToJSON } from "axios";
-
-
+import cardIcon from "../images/cardIcon.png";
 
 export const Details = (props) => {
+  console.log('details', props.info.orders)
   const [categ, setCateg] = useState("");
   const [food, setFood] = useState("");
   const [quantity, setQuantity] = useState(1);
   const formRef = useRef(null);
 
+  let card = 0;
+  const itemAmount = props.info.orders.cartItems.map((item)=>{
+    card += item.itemAmount
+  });
+
   const location = useParams();
   const id = location.rest_id;
-  // console.log(id);
 
   const handleQuantityChange = (e) => {
-    const newQuantity = parseInt(e.target.value, 10); 
+    const newQuantity = parseInt(e.target.value, 10);
     setQuantity(newQuantity);
   };
-  const getSubmit = (e) => {
-    e.preventDefault();
-    const form = formRef.current;
-    const formData = new FormData(form);
-    console.log('formdata', formData);
-    const itemName = formData.get('itemName');
-    const itemPrice = formData.get('itemPrice');
-    const quantity= formData.get('quantity')
-    console.log('itemName', itemName);
-    console.log('itemPrice', itemPrice);
-    console.log('quantity', quantity);
-    // props.dispatch({type: 'ORDERED_ITEM', payload: data})
+
+  const getSubmit = (data, quant, event) => {
+    event.preventDefault();
+    props.dispatch({
+      type: "ADD_TO_CART",
+    payload: { ...data, itemAmount: quant},
+    });
   };
-  
 
   useEffect(() => {
     const fetching = async () => {
@@ -52,15 +50,22 @@ export const Details = (props) => {
     fetching();
   }, []);
 
-
   return (
     <div className="foodContainer">
       <div className="restaurantImgDiv">
-        {props.info? props.info.initialSt.map((item)=>{
-          if(item.id == id){
-            return <h1>{item.name}</h1>
-          }
-        }): 'Loading..'}
+        {props.info
+          ? props.info.initialSt.restaurants.map((item) => {
+              if (item.id == id) {
+                return <h1 className="selectedRestName">{item.name}</h1>;
+              }
+            })
+          : "Loading.."}
+        <div className="cardImgContainer">
+          <Link to='/checkout'>
+            <div className="numberOfOrder">{card}</div>
+            <img className="cardImg" src={cardIcon} alt="" />
+          </Link>
+        </div>
       </div>
       <div className="restaurantInfoDiv">
         <p>
@@ -91,53 +96,61 @@ export const Details = (props) => {
           </div>
         </div>
 
-      <div className="menuFoodContainer">
-        {categ
-? categ.map((data) => {
-return (
-  <div key={data.id} className="menuFoodBox">
-    <h2>{data.name}</h2>
-    <div className="menuFood">
-      {food
-        ? food
-            .filter((item) => item.category_id === data.id)
-            .map((filteredItem) => (
-              <div
-                 key={filteredItem.id}
-                className="menuFoodCard">
-                  <form ref={formRef} className="foodDetails" onClick={getSubmit}>
-                <p>{filteredItem.name}</p>
-                <p className="price">{filteredItem.price} AZN</p>
-                  <label htmlFor="quantity">Quantity:</label>
-                  <input 
-                    id="quantity"
-                    defaultValue={1} 
-                    type="number" 
-                    className="quantityInput"
-                    name = 'quantity'
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                    min='1'
-                    step='1'
-                    />
-                  <Link to='/checkout'>
-                  <button className="quantitebtn" >Add to Card</button>
-                  </Link>
-                </form>
-                <img className="foodSmallImg" src="https://source.unsplash.com/HTpiHBRoBIc" alt="Spaghetti and Meatballs with Basil Garnish"></img>
-                
-              </div>
-              
-            ))
-        : "Loading..."}
+        <div className="menuFoodContainer">
+          {categ
+            ? categ.map((data) => {
+                return (
+                  <div key={data.id} className="menuFoodBox">
+                    <h2>{data.name}</h2>
+                    <div className="menuFood">
+                      {food
+                        ? food
+                            .filter((item) => item.category_id === data.id)
+                            .map((filteredItem) => (
+                              <div
+                                key={filteredItem.id}
+                                className="menuFoodCard"
+                              >
+                                <form ref={formRef} className="foodDetails">
+                                  <p id="itemName">{filteredItem.name}</p>
+                                  <p className="price" id="itemPrice">
+                                    {filteredItem.price} AZN
+                                  </p>
+                                  <label htmlFor="quantity">Quantity:</label>
+                                  <input
+                                    id="quantity"
+                                    defaultValue={1}
+                                    type="number"
+                                    className="quantityInput"
+                                    name="quantity"
+                                    onChange={handleQuantityChange}
+                                    min="1"
+                                    step="1"
+                                  />
+                                  <button
+                                    className="quantitebtn"
+                                    onClick={(event) =>
+                                      getSubmit(filteredItem, quantity, event)
+                                    }
+                                  >
+                                    Add to Card
+                                  </button>
+                                </form>
+                                <img
+                                  className="foodSmallImg"
+                                  src="https://source.unsplash.com/HTpiHBRoBIc"
+                                  alt="Spaghetti and Meatballs with Basil Garnish"
+                                ></img>
+                              </div>
+                            ))
+                        : "Loading..."}
+                    </div>
                   </div>
-                </div>
-              );
-            })
-          : "Loading..."}
-          
+                );
+              })
+            : "Loading..."}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

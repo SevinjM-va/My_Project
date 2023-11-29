@@ -344,14 +344,29 @@ h4{
 .restaurantImgDiv{
   width: 100%;
   height: 350px;
-  background-image: url('./images/img5.png');
+  background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.4)),url('./images/img5.png');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   color:  white;
+  display: flex;
+  align-items: end;
+  justify-content: space-between
+}
+.selectedRestName{
+  font-family: Agbalumo;
+  margin-left: 40px;
+  margin-bottom: 40px;
 }
 .reastaurantMenuDiv h2{
   margin-left: 20px;
+}
+.restaurantInfoDiv{
+  padding-top: 20px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .reastaurantMenu{
   color: black;
@@ -445,7 +460,6 @@ input[type="number"]:focus {
   }
   .checkoutDiv{
     width: 90%;
-    height: 400px;
     box-shadow: 0 0 2px 0.1px rgb(95, 92, 92);
     display: flex;
     justify-content: center;
@@ -499,4 +513,26 @@ input[type="number"]:focus {
  .detail{
   display: flex;
   justify-content: space-between;
+ }
+ .cardImg{
+  width: 70px;
+  height: 65px;
+  margin: 20px;
+ }
+ .cardImgContainer{
+  position: relative;
+ }
+ .numberOfOrder{
+  border: 2px solid rgb(0, 255, 21);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-weight: bold;
+  color: rgb(221, 228, 221);
+  font-size: 40px;
+  position: absolute;
+  top: -2px;
+  margin-left: 25px;
+  background-color: rgba(21, 255, 0, 0.555);
  }

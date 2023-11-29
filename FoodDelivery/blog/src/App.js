@@ -11,7 +11,7 @@ import { Stores } from "./Components/Stores";
 import Details from "./Components/Details";
 import { Footer } from "./Components/Footer";
 import { connect } from "react-redux";
-import { Checkout } from "./Components/Checkout";
+import Checkout from "./Components/Checkout";
 
 
 function App(props) {
