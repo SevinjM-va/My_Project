@@ -12,7 +12,6 @@ export const Home = (props) => {
       <ul className="homeUl">
             <Link to='/explore'><li className="homeLi">Explore</li></Link>
             <Link to='/restaurants'><li className="homeLi">Restaurants</li></Link>
-            <Link to='/stores'><li className="homeLi">Stores</li></Link>
           </ul>
         <div className="title">
           <h1>Select Your Favourite Food</h1>

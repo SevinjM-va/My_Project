@@ -18,7 +18,6 @@ export const LoginPage = () => {
     const emailIn = email.current.value;
     const passwordIn = password.current.value;
 
-    // try {
     const { data } = await axios.post('http://localhost:3500/login',{
       email: emailIn,
       password: passwordIn

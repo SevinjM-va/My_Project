@@ -17,30 +17,37 @@ function reducer(state= initialState, action){
 const orders = {
   cartItems: [],
   amount: 0,
-  totalAmount: 0
+  totPrice: 0
 }
 
 function reducerOrders(state = orders, action){
   if(action.type === 'ADD_TO_CART'){
-
     const checking = state.cartItems.find((item)=>item.id == action.payload.id)
-    
+    console.log('reducer',action.payload)
+
     if(!checking){
       return {...state, cartItems: [...state.cartItems, action.payload]};
     } else {
       const updatedCartItem = state.cartItems.map((item)=>
         item.id === action.payload.id ?
-          {...item, itemAmount: action.payload.itemAmount} : item
+         {...item, itemAmount: item.itemAmount + action.payload.itemAmount} : item
       );
-     console.log('upd',updatedCartItem);
-    const calculAmount = updatedCartItem.map(item =>state.amount += item.price * item.itemAmount)
-    
-    const calculTotalAmount = calculAmount.reducer((prev, curr)=> prev+curr,0);
-  return {...state, cartItems: updatedCartItem, amount: calculAmount, totalAmount: calculTotalAmount};
+      return {...state, cartItems: updatedCartItem} 
     }
+  } else if(action.type === 'CALCULATE_TOTAL'){
+    let totalAmount = 0;
+    let totalPrice = 0;
+    let roundedNum;
+    const calcul = state.cartItems.map((item)=>{
+      totalAmount += item.itemAmount;
+      totalPrice += item.itemAmount * Number(item.price);
+    })
+    return {...state, amount: totalAmount, totPrice: totalPrice };
   }
   return state;
+  
 }
+
 
 
 const rootReducer = combineReducers({

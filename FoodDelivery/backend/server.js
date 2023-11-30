@@ -120,7 +120,7 @@ app.post("/signup", async (req, res) => {
         );
         res.cookie("token", token, { httpOnly: true });
         res.status(200).json({
-          message: "User successfully created",
+          message: "User successfully created",success: true,
           user: {
             firstname: createdUser.firstname,
             lastname: createdUser.lastname,
@@ -166,6 +166,31 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+app.post('/checkout', async (req, res)=>{
+  try{
+    const orderedItem = req.body.orders;
+ 
+    const itemDetails = orderedItem.map(async(item)=>{
+      const orderName = item.name;
+      const orderQuantity = item.itemAmount;
+      const totalAmount = item.price * item.itemAmount
+
+      await db('orders')
+      .insert({
+        order_name: orderName,
+        order_quantity: orderQuantity,
+        total_amount: totalAmount
+      });
+      })
+      res.status(201).json({message:'Order successful', success: true});
+  }
+  catch (error) {
+    console.error('Error handling order:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
 
 app.listen(3500, () => {
   console.log("3500 port hazirdir");

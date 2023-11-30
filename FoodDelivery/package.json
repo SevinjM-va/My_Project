@@ -24,6 +24,7 @@
     "nodemon": "^3.0.1",
     "pg": "^8.11.3",
     "pg-promise": "^11.5.4",
+    "react-icons": "^4.12.0",
     "react-responsive-carousel": "^3.2.23",
     "yarn": "^1.22.21"
   }

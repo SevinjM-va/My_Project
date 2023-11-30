@@ -7,7 +7,6 @@ import { Signup } from "./Components/SignUp";
 import { LoginPage } from "./Components/Login";
 import Explore from "./Components/Explore";
 import Restaurants from "./Components/Restaurants";
-import { Stores } from "./Components/Stores";
 import Details from "./Components/Details";
 import { Footer } from "./Components/Footer";
 import { connect } from "react-redux";
@@ -45,7 +44,6 @@ function App(props) {
         <Route path="/explore" element={<Explore />} />
         <Route path="/restaurants/" element={<Restaurants />} />
         <Route path="/restaurants/:rest_id" element={<Details/>} />
-        <Route path="/stores" element={<Stores />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <Footer />

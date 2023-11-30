@@ -6,7 +6,7 @@ const Checkout = (props) => {
   const propsInfo = props.info.orders;
   const [error, setError] = useState("");
   const token = localStorage.getItem("token");
-  console.log('checkout',propsInfo.amount)
+  console.log('checkout',propsInfo)
 
   useEffect(() => {
     const fetching = async () => {
@@ -23,6 +23,22 @@ const Checkout = (props) => {
     };
     fetching();
   }, []);
+
+  useEffect(()=>{
+    props.dispatch({type: 'CALCULATE_TOTAL'})
+  },[propsInfo.cartItems]);
+
+  const handleClick=async(e)=>{
+    e.preventDefault();
+    try {
+    const { data } = await axios.post('http://localhost:3500/checkout',{
+     orders: propsInfo.cartItems,
+    })
+    console.log('fetch',data)
+  } catch (error){setError(error)}
+  }
+
+
 
   return (
     <div className="checkoutContainer">
@@ -49,8 +65,13 @@ const Checkout = (props) => {
                       <div className="detail">
                       <p>{item.name}</p>
                       </div>
-                    <label>Quantity:</label>
-                    <label>{item.itemAmount}</label>
+                      <div className="priceDiv">
+                      <div>
+                        <label>Quantity:</label>
+                        <label>{item.itemAmount}</label>
+                    </div>
+                    <label className="totalPrice">{item.itemAmount * item.price} AZN</label>
+                    </div>
                 </div>
                 </div>
                   )}):''}
@@ -60,7 +81,7 @@ const Checkout = (props) => {
           <div className="checkoutorder">
             <h3>Prices in AZN</h3>
             <div className="itemSubtotal">
-              <p>Item subtotal ({} item)</p>
+              <p>Item subtotal ({propsInfo.amount} item)</p>
               <p>{}</p>
             </div>
             <div className="deliveryFee">
@@ -70,9 +91,9 @@ const Checkout = (props) => {
             <hr></hr>
             <div className="totalSum">
               <h4>Total Sum</h4>
-              <p>AZN {}</p>
+              <h4>AZN {propsInfo.totPrice}</h4>
             </div>
-            <button className="submitBtn">Submit</button>
+            <button className="submitBtn" onClick={handleClick}>Submit</button>
           </div>
         </div>
       )}

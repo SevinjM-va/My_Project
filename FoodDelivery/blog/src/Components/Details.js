@@ -6,7 +6,6 @@ import { formToJSON } from "axios";
 import cardIcon from "../images/cardIcon.png";
 
 export const Details = (props) => {
-  console.log('details', props.info.orders)
   const [categ, setCateg] = useState("");
   const [food, setFood] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -31,7 +30,9 @@ export const Details = (props) => {
       type: "ADD_TO_CART",
     payload: { ...data, itemAmount: quant},
     });
+    setQuantity(1)
   };
+
 
   useEffect(() => {
     const fetching = async () => {
@@ -119,7 +120,7 @@ export const Details = (props) => {
                                   <label htmlFor="quantity">Quantity:</label>
                                   <input
                                     id="quantity"
-                                    defaultValue={1}
+                                    defaultValue={quantity}
                                     type="number"
                                     className="quantityInput"
                                     name="quantity"

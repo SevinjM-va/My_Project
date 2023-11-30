@@ -536,3 +536,11 @@ input[type="number"]:focus {
   margin-left: 25px;
   background-color: rgba(21, 255, 0, 0.555);
  }
+ .priceDiv{
+  display: flex;
+  justify-content: space-between;
+ }
+.totalPrice{
+  color: #007bff;
+  font-size: 20px;
+}

@@ -3,12 +3,9 @@ import axios, { Axios } from "axios";
 import { useNavigate} from 'react-router-dom';
 
 export const Signup = () => {
-  const [error, setError] = useState('');
-  // let navigate = useNavigate();
-
-  // function handleClick() {
-  //   navigate('/');
-  // }
+  const [message, setMessage] = useState('');
+  let navigate = useNavigate();
+  const [data, setData] = useState(false);
 
   const firstname = useRef()
   const lastname = useRef()
@@ -33,17 +30,23 @@ export const Signup = () => {
       email: emailIn,
       password: passwordIn
     })
-  } catch (error){setError(error)}
+    if(data.success){;
+    setMessage("Success")}
+  } catch (error){setMessage(error)}
+  
   }
-
+  const handleClick=()=>{
+    if(data){
+      navigate('/')
+    }
+  }
 
 
   return (
     <div className="signupContainer">
-      {error? 
+      {message? 
       <div className="errorContainer">
-        <h2 className="errorTitle">Error</h2>
-        <p className="errorMessage">This user is already exists!!!</p>
+        <h2 className="errorTitle">{'User successfully created'}</h2>
         </div> : 
       <div className="miniSignupContainer">
         <form onSubmit={(e)=>handleSubmit(e)}>
@@ -99,13 +102,13 @@ export const Signup = () => {
               type="checkbox"
               className="form-check-input"
               id="exampleCheck1"
-              // required
+              required
             />
             <label className="form-check-label" htmlFor="exampleCheck1">
               I am agree with all conditions
             </label>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" onClick={handleClick} className="btn btn-primary">
             Submit
           </button>
         </form>

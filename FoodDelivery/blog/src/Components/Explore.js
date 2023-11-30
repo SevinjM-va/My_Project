@@ -2,6 +2,9 @@ import React, { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 
+import photo1 from '../images/img1.png'
+import photo2 from '../images/img2.png'
+import photo3 from '../images/img3.png'
 
 
 const Explore = (props) => {
@@ -36,7 +39,6 @@ const Explore = (props) => {
     </div>
   );
 };
-
 
 
 
