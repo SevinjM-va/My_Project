@@ -10,7 +10,6 @@ export const Details = (props) => {
   const [food, setFood] = useState("");
   const [quantity, setQuantity] = useState(1);
   const formRef = useRef(null);
-
   let card = 0;
   const itemAmount = props.info.orders.cartItems.map((item)=>{
     card += item.itemAmount
@@ -131,9 +130,7 @@ export const Details = (props) => {
                                   <button
                                     className="quantitebtn"
                                     onClick={(event) =>
-                                      getSubmit(filteredItem, quantity, event)
-                                    }
-                                  >
+                                      getSubmit(filteredItem, quantity, event)}>
                                     Add to Card
                                   </button>
                                 </form>

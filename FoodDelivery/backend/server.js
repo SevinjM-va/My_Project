@@ -167,6 +167,20 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get('/', async(req, res)=>{
+  try{
+    const restaurants = db('restaurants').select('*');
+    const category = db('category').select('*');
+    const menu_item = db('menu_item').select('*');
+
+    const [restaurantsData, categoryData, foodData] =
+     await Promise.all([restaurants,category,menu_item]);
+
+     res.json({restaurants: restaurantsData, category: categoryData, menu_item: foodData})
+  } catch(err) {
+        res.status(500).json({error: "An error occurred while retrieving data"})
+  }
+})
 
 app.post('/checkout', async (req, res)=>{
   try{

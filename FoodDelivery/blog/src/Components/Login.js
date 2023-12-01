@@ -24,8 +24,7 @@ export const LoginPage = () => {
     })
     localStorage.setItem('token', data.token)
     setData(data.success)
-  }
-  console.log('data',data);
+  };
   const handleClick=()=>{
     if(data){
       navigate('/')

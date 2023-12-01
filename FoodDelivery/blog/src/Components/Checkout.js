@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 const Checkout = (props) => {
   const propsInfo = props.info.orders;
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const token = localStorage.getItem("token");
   console.log('checkout',propsInfo)
 
@@ -17,8 +17,12 @@ const Checkout = (props) => {
             "Content-Type": "application/json",
           },
         });
+        // if(data){
+        //   setLogin()
+        // }
+       
       } catch (error) {
-        setError(error);
+        setMessage("You must log in!!");
       }
     };
     fetching();
@@ -34,18 +38,20 @@ const Checkout = (props) => {
     const { data } = await axios.post('http://localhost:3500/checkout',{
      orders: propsInfo.cartItems,
     })
-    console.log('fetch',data)
-  } catch (error){setError(error)}
+    if(data.success){;
+      setMessage('Order successful')
+      props.dispatch({type: 'CLEAR_STATE'})
+    }
+  } catch (error){setMessage(error)}
   }
 
 
 
   return (
     <div className="checkoutContainer">
-      {error ? (
+      {message ? (
         <div className="errorContainer">
-          <h2>Error</h2>
-          <p>Please log in!</p>
+          <h2>{message}</h2>
         </div>
       ) : (
         <div className="checkoutDiv">

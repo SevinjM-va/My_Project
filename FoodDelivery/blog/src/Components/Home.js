@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 export const Home = (props) => {
-
   // console.log("props from home", props);
   return (
     <div>
-
       <div className="heading">
-      <ul className="homeUl">
-            <Link to='/explore'><li className="homeLi">Explore</li></Link>
-            <Link to='/restaurants'><li className="homeLi">Restaurants</li></Link>
-          </ul>
+        
         <div className="title">
           <h1>Select Your Favourite Food</h1>
           <h3 className="subtitle">Sign up and get 50% off your first order</h3>

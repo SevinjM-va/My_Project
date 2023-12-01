@@ -7,7 +7,7 @@ export const Footer = () => {
 
   const location = useLocation();
 
-  const footerPath = ['/','/checkout','/restaurants','/stores',]
+  const footerPath = ['/','/checkout','/restaurants','/explore',]
   if(!footerPath.includes(location.pathname)){
     return null
   }

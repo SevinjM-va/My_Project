@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios, { Axios } from "axios";
-import { useNavigate} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 export const Signup = () => {
   const [message, setMessage] = useState('');
-  let navigate = useNavigate();
-  const [data, setData] = useState(false);
 
   const firstname = useRef()
   const lastname = useRef()
@@ -31,22 +29,22 @@ export const Signup = () => {
       password: passwordIn
     })
     if(data.success){;
-    setMessage("Success")}
+    setMessage("User successfully created")}
   } catch (error){setMessage(error)}
   
   }
-  const handleClick=()=>{
-    if(data){
-      navigate('/')
-    }
-  }
+
 
 
   return (
     <div className="signupContainer">
       {message? 
       <div className="errorContainer">
-        <h2 className="errorTitle">{'User successfully created'}</h2>
+        <h2 className="errorTitle">{message}</h2>
+        <Link to='/'>
+        <button className="btn btn-success" >
+        <i class="fa-solid fa-arrow-right"></i>
+          Home Page</button></Link>
         </div> : 
       <div className="miniSignupContainer">
         <form onSubmit={(e)=>handleSubmit(e)}>
@@ -108,7 +106,7 @@ export const Signup = () => {
               I am agree with all conditions
             </label>
           </div>
-          <button type="submit" onClick={handleClick} className="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Submit
           </button>
         </form>

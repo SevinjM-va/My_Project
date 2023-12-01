@@ -26,6 +26,8 @@
     "pg-promise": "^11.5.4",
     "react-icons": "^4.12.0",
     "react-responsive-carousel": "^3.2.23",
+    "react-select": "^5.8.0",
+    "swiper": "^11.0.5",
     "yarn": "^1.22.21"
   }
 }

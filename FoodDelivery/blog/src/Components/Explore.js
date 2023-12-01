@@ -1,49 +1,38 @@
-import React, { useEffect,useState } from "react";
-import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-import photo1 from '../images/img1.png'
-import photo2 from '../images/img2.png'
-import photo3 from '../images/img3.png'
-
+import { connect } from "react-redux";
 
 const Explore = (props) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] = useState("");
-
-
-
-
-
-  useEffect(() => {
-    const fetching = async () => {
-      try {
-        const response = await fetch(`http://localhost:3500/restaurants/2`);
-        if (!response.ok) {
-          throw new Error(`Http error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setSlides(data.menuItems);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetching();
-  }, []);
-
-  console.log(slides)
-
+  const propsInfo = props.info.initialSt.category;
   return (
-    <div>
-      
+    <div className="restContainer">
+      <div className="restHeader">
+        <h2 className="restTitle">Explore</h2>
+        <h3> All Categories</h3>
+      </div>
+      <div className="restMiniContainer">
+        {propsInfo
+          ? propsInfo.map((data) => {
+              console.log(data);
+              return (
+                <Link to={`/restaurants/${data.restaurant_id}`}>
+                  <div
+                    key={data.id}
+                    className="restCardContainer">
+                    <img className="restImg" src={data.img} alt="" />
+                    <h4>{data.name}</h4>
+                  </div>
+                </Link>
+              );
+            })
+          : "Loading..."}
+      </div>
     </div>
   );
-};
+}
+const mapStateToProps = (state) => ({
+  info: state,
+});
 
-
-
-const mapStateToProps=(state)=>({
-  info: state
-})
-
-export default connect(mapStateToProps)(Explore)
+export default connect(mapStateToProps)(Explore);
