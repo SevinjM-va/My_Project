@@ -641,7 +641,7 @@ i{
       color: rgb(145, 87, 11);
     }
     .navExp,.navRest{
-      font-size: 1px;
+      font-size: 15px;
       margin: 0;
     }
     .search{
@@ -667,4 +667,22 @@ i{
       color: rgb(145, 87, 11);
     }
     }
-   
+    .profilDiv{
+      cursor: pointer;
+      background-color: rgba(128, 128, 128, 0.274);
+      border-radius: 20px;
+      padding: 5px 10px;
+    }
+    .fa-user{
+      font-size: 30px;
+    }
+    h7{
+      color: white;
+    }
+    .fa-trash{
+      color: gray;
+      font-size: 20px;
+    }
+   .fa-utensils,.fa-globe{
+    color: white;
+   }

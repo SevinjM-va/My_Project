@@ -14,7 +14,6 @@ const Explore = (props) => {
       <div className="restMiniContainer">
         {propsInfo
           ? propsInfo.map((data) => {
-              console.log(data);
               return (
                 <Link to={`/restaurants/${data.restaurant_id}`}>
                   <div

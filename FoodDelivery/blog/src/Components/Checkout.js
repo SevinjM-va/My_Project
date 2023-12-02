@@ -6,8 +6,10 @@ const Checkout = (props) => {
   const propsInfo = props.info.orders;
   const [message, setMessage] = useState("");
   const token = localStorage.getItem("token");
-  console.log('checkout',propsInfo)
+  console.log('token',token == null)
 
+
+  //Get Token.
   useEffect(() => {
     const fetching = async () => {
       try {
@@ -17,34 +19,36 @@ const Checkout = (props) => {
             "Content-Type": "application/json",
           },
         });
-        // if(data){
-        //   setLogin()
-        // }
-       
+        
       } catch (error) {
-        setMessage("You must log in!!");
+        setMessage("Something went wrong!!!");
       }
     };
     fetching();
   }, []);
 
+  //Calculate total amount.
   useEffect(()=>{
     props.dispatch({type: 'CALCULATE_TOTAL'})
   },[propsInfo.cartItems]);
 
+  //Posting ordering items to Database.
   const handleClick=async(e)=>{
     e.preventDefault();
     try {
     const { data } = await axios.post('http://localhost:3500/checkout',{
      orders: propsInfo.cartItems,
     })
-    if(data.success){;
+    //After posting I will clean the card.
+    if(data.success){
       setMessage('Order successful')
       props.dispatch({type: 'CLEAR_STATE'})
     }
   } catch (error){setMessage(error)}
   }
-
+  const clearItem=(id)=>{
+    props.dispatch({type: 'CLEAR_ITEM',payload: id})
+  }
 
 
   return (
@@ -77,6 +81,7 @@ const Checkout = (props) => {
                         <label>{item.itemAmount}</label>
                     </div>
                     <label className="totalPrice">{item.itemAmount * item.price} AZN</label>
+                    <i class="fa-solid fa-trash" onClick={()=>clearItem(item.id)}></i>
                     </div>
                 </div>
                 </div>
@@ -88,7 +93,7 @@ const Checkout = (props) => {
             <h3>Prices in AZN</h3>
             <div className="itemSubtotal">
               <p>Item subtotal ({propsInfo.amount} item)</p>
-              <p>{}</p>
+              <p>{propsInfo.totPrice }AZN</p>
             </div>
             <div className="deliveryFee">
               <p>Delivery</p>

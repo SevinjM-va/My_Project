@@ -6,8 +6,10 @@ import { connect } from "react-redux";
 
 const Navbar = (props) => {
   const [rest, setRest] = useState("");
+  const [profilData, setProfilData] = useState(false);
   const location = useLocation();
   const propsRest = props.info.initialSt.restaurants;
+  const token = localStorage.getItem("token");
 
   const navbarPath = ["/", "/explore", "/restaurants", "/stores", "/checkout"];
   if (!navbarPath.includes(location.pathname)) {
@@ -27,7 +29,7 @@ const Navbar = (props) => {
     searchInput.length > 0 ? setRest(findRest) : setRest("");
 
   };
-
+  
   return (
     <div className="navbarContainer">
       <nav className="navbar navbar-light bg-light">
@@ -36,10 +38,13 @@ const Navbar = (props) => {
             <img className="logoImg" src={SeeFoo} alt=""></img>
           </Link>
           <Link to="/restaurants" className="navbar-brand">
-          <p className="navRest">Restaurants</p>
+          <p className="navRest">
+          <i class="fa-solid fa-utensils"></i>
+          Restaurants</p>
           </Link>
           <Link to="/explore" className="navbar-brand">
-          <p className="navExp">Explore</p>
+          <p className="navExp">
+          <i class="fa-solid fa-globe"></i>Explore</p>
           </Link>
          
           
@@ -54,7 +59,7 @@ const Navbar = (props) => {
             ></input>
             <i className="fa-solid fa-magnifying-glass"></i>
           </div>
-
+          {token == null ? 
           <form className="d-flex">
             <Link to="/login">
               <button className="btn btn-success" type="submit">
@@ -66,10 +71,15 @@ const Navbar = (props) => {
                 Sign up
               </button>
             </Link>
-          </form>
+          </form>: 
+          <div className="profilDiv">
+          <i class="fa-regular fa-user"></i> 
+          <h7>Profil</h7>
+          </div>}
         </div>
       </nav>
       <div className="searchContainerCon">
+      
         <div className="searchContainer">
             {rest
               ? rest.map((item) => {
