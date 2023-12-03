@@ -1,7 +1,10 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import SeeFoo from "../images/Seefoo.png";
-
+import img1 from "../images/instagram.svg";
+import img2 from "../images/linkedin.svg";
+import img3 from "../images/youtube.svg";
+import img4 from "../images/facebook.svg";
 
 export const Footer = () => {
 
@@ -25,12 +28,12 @@ export const Footer = () => {
             <div className="icon-container-footer">
               <img
                 className="icon-footer"
-                src="http://www.w3.org/2000/svg"
+                src={img4}
                 alt=""
               ></img>
-              <img className="icon-footer" src="Img/twitter.svg" alt=""></img>
-              <img className="icon-footer" src="Img/youtube.svg" alt=""></img>
-              <img className="icon-footer" src="Img/github.svg" alt=""></img>
+              <img className="icon-footer" src={img1} alt=""></img>
+              <img className="icon-footer" src={img2} alt=""></img>
+              <img className="icon-footer" src={img3} alt=""></img>
             </div>
           </div>
         </div>

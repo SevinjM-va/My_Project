@@ -21,7 +21,7 @@ const Checkout = (props) => {
         });
         
       } catch (error) {
-        setMessage("Something went wrong!!!");
+        setMessage("You must log in!");
       }
     };
     fetching();

@@ -60,7 +60,7 @@ h1{
 }
 .signupContainer{
   width: 100%;
-  height: 650px;
+  height: 727px;
   border: 2px solid black;
   display: flex;
   justify-content: center;
@@ -214,6 +214,7 @@ footer{
  width: 30px;
  height: 30px;
  align-items: center;
+ cursor: pointer;
 
 }
 .footer2{
@@ -228,6 +229,7 @@ footer{
 .footername{
   color: white;
 }
+
 .copyright{
   width: 10px;
   height: 10px;
