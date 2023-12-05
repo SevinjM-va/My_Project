@@ -54,7 +54,7 @@ const Navbar = (props) => {
               className="search"
               name="search"
               type="text"
-              placeholder="Search..."
+              placeholder="Search your restaurant.."
               onChange={handleChange}
             ></input>
             <i className="fa-solid fa-magnifying-glass"></i>
