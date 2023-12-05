@@ -25,6 +25,16 @@ app.use(
     extended: false,
   })
 );
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+
+
+
 app.use(cors());
 
 app.get("/checkout", authentificateJWT, (req, res) => {
@@ -208,4 +218,12 @@ app.post('/checkout', async (req, res)=>{
 
 app.listen(3500, () => {
   console.log("3500 port hazirdir");
+});
+
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
